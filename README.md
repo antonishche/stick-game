@@ -1,12 +1,22 @@
-# React + Vite
+<div>
+  <h1>Stick Trainer</h1>
+  <p><strong>Описание</strong>: Веб-приложение для игры в палочки с 5 режимами: стандартный (1–k любых), интервальный (a–b любых), подряд (1–k подряд), подряд и интервально (a–b подряд), особый (1–2 любые или 3 подряд). Игрок настраивает параметры и играет против компьютера.</p>
+  
+  <p><strong>Инструменты</strong>:
+    <ul>
+      <li><b>React, JavaScript</b></li>
+      <li><b>SCSS</b></li>
+      <li><b>Firebase</b></li>
+    </ul>
+  </p>
+  
+  <p><strong>Хостинг</strong>: <a href="https://stick-trainer.web.app/">https://stick-trainer.web.app/</a></p>
+  
+  <p><strong>Примечания</strong>:
+    <ol>
+      <li>Компьютер ходит автоматически. Побеждает тот, кто заберёт последнюю палочку.</li>
+    </ol>
+  </p>
+</div>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
