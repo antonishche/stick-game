@@ -1,0 +1,26 @@
+.app {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Inter', -apple-system, sans-serif;
+  
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .newGameButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  
+    &:hover {
+      background: #c82333;
+    }
+  }
