@@ -10,14 +10,14 @@ const GameBoard = ({ state, k, onPlayerMove }) => {
     if (state.sticks[index] === 0) return;
     if (selected.includes(index)) {
       setSelected(selected.filter((i) => i !== index));
-    } else if (selected.length < k) {
+    } else if (selected.length < state.max) {
       setSelected([...selected, index]);
     }
   };
 
   const handleSubmitMove = () => {
-    if (!validateMove(state, selected, k)) {
-      alert('Неверный ход: выберите от 1 до k палочек.');
+    if (!validateMove(state, selected)) {
+      alert('Неверный ход');
       return;
     }
     onPlayerMove(makePlayerMove(state, selected));
@@ -36,7 +36,11 @@ const GameBoard = ({ state, k, onPlayerMove }) => {
               stick === 1 ? styles.active : styles.inactive,
               selected.includes(index) && styles.selected
             )}
-            onClick={() => handleStickClick(index)}
+            onClick={() => {
+              if (state.currentPlayer == 'player') {
+                handleStickClick(index);
+              }
+            }}
           >
             {stick === 1 ? '|' : ' '}
           </div>
@@ -46,7 +50,10 @@ const GameBoard = ({ state, k, onPlayerMove }) => {
         <button
           className={styles.submitButton}
           onClick={handleSubmitMove}
-          disabled={selected.length === 0}
+          disabled={
+            (state.mode % 2 ? selected.length === 0 : selected.length < state.min) 
+            && selected.length !== state.restSticks
+          }
         >
           Сделать ход
         </button>

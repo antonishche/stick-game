@@ -1,51 +1,72 @@
-export const initializeGame = (n, firstPlayer) => ({
-    sticks: Array(n).fill(1),
-    currentPlayer: firstPlayer,
-    winner: null,
-    restSticks: n
+export const initializeGame = (obj) => ({
+  sticks: Array(obj.n).fill(1),
+  currentPlayer: obj.firstPlayer,
+  winner: null,
+  restSticks: obj.n,
+  max: obj.max,
+  min: obj.min,
+  mode: obj.mode
+});
+
+export const makePlayerMove = (state, positions) => {
+
+  const sticks = [...state.sticks];
+
+  positions.forEach((pos) => {
+    sticks[pos] = 0;
   });
-  
-  export const makePlayerMove = (state, positions) => {
-    const newSticks = [...state.sticks];
-    positions.forEach((pos) => {
-      newSticks[pos] = 0;
-    });
-    const remaining = newSticks.reduce((sum, s) => sum + s, 0);
-    return {
-      ...state,
-      sticks: newSticks,
-      currentPlayer: 'computer',
-      winner: remaining === 0 ? 'player' : null,
-      restSticks: remaining
-    };
+
+  const remaining = sticks.filter(s => s === 1).length
+
+  return {
+    ...state,
+    sticks: sticks,
+    currentPlayer: 'computer',
+    winner: remaining === 0 ? 'player' : null,
+    restSticks: remaining
   };
-  
-  export const makeComputerMove = (state, k) => {
-    const numSticks = state.sticks.reduce((sum, s) => sum + s, 0);
-    let rest = numSticks % (k + 1) !== 0 ? numSticks % (k + 1) : 1;
-    const newSticks = [...state.sticks];
-    const positions = [];
-    for (let i = 0; i < newSticks.length && rest > 0; i++) {
-      if (newSticks[i] === 1) {
-        newSticks[i] = 0;
-        positions.push(i);
-        rest--;
-      }
+};
+
+export const makeComputerMove = (state) => {
+  const sticks = [...state.sticks];
+  const taken = [];
+  const total = sticks.filter(s => s === 1).length;
+  let toTake;
+
+  if (state.mode === 1) {
+    toTake = total % (state.max + 1) || 1;
+  } else if (state.mode === 2){
+    toTake = total % (state.max + state.min);
+    toTake = Math.max(state.min, Math.min(toTake, state.max));
+    toTake = toTake > state.restSticks ? state.restSticks : toTake;
+  }
+
+  for (let i = 0; i < sticks.length && toTake > 0; i++) {
+    if (sticks[i] === 1) {
+      sticks[i] = 0;
+      taken.push(i);
+      toTake--;
     }
-    const remaining = newSticks.reduce((sum, s) => sum + s, 0);
-    return {
-      ...state,
-      sticks: newSticks,
-      currentPlayer: 'player',
-      winner: remaining === 0 ? 'computer' : null,
-      restSticks: remaining
-    };
-  };
+  }
+
+  const remaining = sticks.filter(s => s === 1).length;
   
-  export const validateMove = (state, positions, k) => {
-    const count = positions.length;
-    if (count < 1 || count > k) return false;
-    if (positions.some((p) => p < 0 || p >= state.sticks.length || state.sticks[p] === 0)) return false;
-    return new Set(positions).size === count;
+  return {
+    ...state,
+    sticks,
+    currentPlayer: 'player',
+    winner: remaining === 0 ? 'computer' : null,
+    restSticks: remaining
   };
-  
+};
+
+export const validateMove = (state, positions) => {
+  if (positions.some((p) => p < 0 || p >= state.sticks.length || state.sticks[p] === 0)) return false;
+  const count = positions.length;
+  if (state.mode === 1) {
+    if (count < 1 || count > state.max) return false;
+  } else if (state.mode === 2) {
+    if ((count < state.min && count !== state.restSticks) || count > state.max) return false;
+  }
+  return new Set(positions).size === count;
+};

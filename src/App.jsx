@@ -8,18 +8,18 @@ import styles from './App.module.scss';
 
 const App = () => {
   const [gameState, setGameState] = useState(null);
-  const [k, setK] = useState(1);
+  const [k, setK] = useState();
   const [mode, setMode] = useState(false);
 
-  const handleStart = ({ n, k, firstPlayer }) => {
-    setGameState(initializeGame(n, firstPlayer));
-    setK(k);
+  const handleStart = ({ objForLogic }) => {
+    setGameState(initializeGame( objForLogic ));
+    setK(objForLogic.max);
   };
 
   useEffect(() => {
     if (gameState && gameState.currentPlayer === 'computer' && !gameState.winner) {
       const timeout = setTimeout(() => {
-        setGameState(makeComputerMove(gameState, k));
+        setGameState(makeComputerMove(gameState));
       }, 1000);
       return () => clearTimeout(timeout);
     }
@@ -32,7 +32,7 @@ const App = () => {
   return (
     <div className={styles.app}>
       {!gameState ? (
-        <GameSettings onStart={handleStart} choseMode={setMode}/>
+        <GameSettings onStart={handleStart} choseMode={setMode} pickedMode={mode}/>
       ) : (
         <>
           <GameStatus state={gameState} />

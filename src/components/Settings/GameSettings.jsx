@@ -1,33 +1,34 @@
 import React, { useState } from 'react';
 import styles from './GameSettings.module.scss';
 
-const GameSettings = ({ onStart, choseMode }) => {
-    const [n, setN] = useState(5);
-    const [k, setK] = useState(1);
+const GameSettings = ({ onStart, choseMode, pickedMode }) => {
+
+    const [n, setN] = useState();
+    const [min, setMin] = useState();
+    const [max, setMax] = useState();
     const [firstPlayer, setFirstPlayer] = useState('player');
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      if (n < 5 || n > 50) {
-        alert('n должно быть от 5 до 50.');
-        return;
+      const objForLogic = {
+        n: n,
+        min: min,
+        max: max,
+        firstPlayer: firstPlayer,
+        mode: pickedMode
       }
-      if (k < 1 || k > n) {
-        alert('k должно быть от 1 до n.');
-        return;
-      }
-      onStart({ n, k, firstPlayer });
+      onStart({ objForLogic });
     };
   
     return (
       <form className={styles.settings} onSubmit={handleSubmit}>
         <div className={styles.row}>
-          <div onClick={()=>choseMode(false)}>←</div>
+          <div title='Выбрать режим' onClick={()=>choseMode(false)}><strong><b>←</b></strong></div>
           <h2>Настройки</h2>
         </div>
         <div className={styles.field}>
           <label>
-            Количество палочек (n, 5–50):
+            Количество палочек:
             <input
               type="number"
               onChange={(e) => setN(Number(e.target.value))}
@@ -38,22 +39,41 @@ const GameSettings = ({ onStart, choseMode }) => {
             />
           </label>
         </div>
-        <div className={styles.field}>
+
+        {/* </> */}
+
+        {(pickedMode === 2 || pickedMode === 4) && <div className={styles.field}>
           <label>
-            Максимум палочек за ход (k, 1–n):
+            Минимум палочек за ход:
             <input
               type="number"
-              onChange={(e) => setK(Number(e.target.value))}
-              min="1"
+              onChange={(e) => setMin(Number(e.target.value))}
+              min="2"
+              max={max}
+              className={styles.input}
+              required
+            />
+          </label>
+        </div>}
+        {pickedMode !== 5 && <div className={styles.field}>
+          <label>
+            Максимум палочек за ход:
+            <input
+              type="number"
+              onChange={(e) => setMax(Number(e.target.value))}
+              min={min}
               max={n}
               className={styles.input}
               required
             />
           </label>
-        </div>
+        </div>}
+
+        {/* </> */}
+
         <div className={styles.field}>
           <label>
-            Первый ход:
+            Первый ходит:
             <select
               value={firstPlayer}
               onChange={(e) => setFirstPlayer(e.target.value)}
