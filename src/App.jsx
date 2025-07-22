@@ -3,7 +3,8 @@ import GameSettings from './components/Settings/GameSettings';
 import GameBoard from './components/Board/GameBoard';
 import GameStatus from './components/Status/GameStatus';
 import GameMode from './components/Mode/GameMode';
-import { initializeGame, makeComputerMove } from './logic/gameLogic';
+import { initializeGame } from './logic/player/initializeGame';
+import { makeComputerMove } from './logic/computer/computerMove';
 import styles from './App.module.scss';
 
 const App = () => {
@@ -36,7 +37,7 @@ const App = () => {
       ) : (
         <>
           <GameStatus state={gameState} />
-          <GameBoard state={gameState} k={k} onPlayerMove={setGameState}/>
+          <GameBoard state={gameState} onPlayerMove={setGameState}/>
           {gameState.winner && (
             <button className={styles.newGameButton} onClick={() => setGameState(null)}>
               Новая игра

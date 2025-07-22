@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import { validateMove, makePlayerMove } from '../../logic/gameLogic';
+import { validateMove } from '../../logic/player/validateMove'
+import { makePlayerMove } from '../../logic/player/playerMove'
+import { isDisabled, handleStickClick } from '../../logic/stickCheck/stickCheck';
 import styles from './GameBoard.module.scss';
 
-const GameBoard = ({ state, k, onPlayerMove }) => {
+const GameBoard = ({ state, onPlayerMove }) => {
   const [selected, setSelected] = useState([]);
-
-  const handleStickClick = (index) => {
-    if (state.sticks[index] === 0) return;
-    if (selected.includes(index)) {
-      setSelected(selected.filter((i) => i !== index));
-    } else if (selected.length < state.max) {
-      setSelected([...selected, index]);
-    }
-  };
+  const [err, setErr] = useState(false)
 
   const handleSubmitMove = () => {
     if (!validateMove(state, selected)) {
-      alert('Неверный ход');
+      setErr('Неверный ход! Проверьте правила для выбранного режима.')
       return;
+    } else {
+      setErr(false);
     }
     onPlayerMove(makePlayerMove(state, selected));
     setSelected([]);
@@ -36,13 +32,9 @@ const GameBoard = ({ state, k, onPlayerMove }) => {
               stick === 1 ? styles.active : styles.inactive,
               selected.includes(index) && styles.selected
             )}
-            onClick={() => {
-              if (state.currentPlayer == 'player') {
-                handleStickClick(index);
-              }
-            }}
+            onClick={() => handleStickClick(index, state, selected, setSelected, setErr)}
           >
-            {stick === 1 ? '|' : ' '}
+            {stick === 1 ? index + 1 : ' '}
           </div>
         ))}
       </div>
@@ -50,14 +42,12 @@ const GameBoard = ({ state, k, onPlayerMove }) => {
         <button
           className={styles.submitButton}
           onClick={handleSubmitMove}
-          disabled={
-            (state.mode % 2 ? selected.length === 0 : selected.length < state.min) 
-            && selected.length !== state.restSticks
-          }
+          disabled={isDisabled(selected, state)}
         >
           Сделать ход
         </button>
       )}
+      {err && <div className={styles.err}>{err}</div>}
     </div>
   );
 };

@@ -1,0 +1,1 @@
+export const firstMode = (state) => state.restSticks % (state.max + 1) || 1;

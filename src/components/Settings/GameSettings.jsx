@@ -31,6 +31,7 @@ const GameSettings = ({ onStart, choseMode, pickedMode }) => {
             Количество палочек:
             <input
               type="number"
+              name='number-of-sticks'
               onChange={(e) => setN(Number(e.target.value))}
               min="5"
               max="50"
@@ -40,13 +41,12 @@ const GameSettings = ({ onStart, choseMode, pickedMode }) => {
           </label>
         </div>
 
-        {/* </> */}
-
         {(pickedMode === 2 || pickedMode === 4) && <div className={styles.field}>
           <label>
             Минимум палочек за ход:
             <input
               type="number"
+              name='min-of-sticks'
               onChange={(e) => setMin(Number(e.target.value))}
               min="2"
               max={max}
@@ -60,6 +60,7 @@ const GameSettings = ({ onStart, choseMode, pickedMode }) => {
             Максимум палочек за ход:
             <input
               type="number"
+              name='max-of-sticks'
               onChange={(e) => setMax(Number(e.target.value))}
               min={min}
               max={n}
@@ -69,13 +70,12 @@ const GameSettings = ({ onStart, choseMode, pickedMode }) => {
           </label>
         </div>}
 
-        {/* </> */}
-
         <div className={styles.field}>
           <label>
             Первый ходит:
             <select
               value={firstPlayer}
+              name='first-move'
               onChange={(e) => setFirstPlayer(e.target.value)}
               className={styles.select}
             >
