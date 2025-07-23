@@ -1,4 +1,12 @@
 export const secondMode = (state) => {
-    const rest = state.restSticks % (state.max + state.min);
-    return Math.max(state.min, Math.min(rest, state.max));
-}
+    const { restSticks, min, max } = state;
+
+    for (let rest = 0; rest < min; rest++) {
+        for (let take = min; take <= max; take++) {
+            if ((restSticks - take) % (min + max) === rest) {
+                return take;
+            }
+        }
+    }
+    return min
+  };

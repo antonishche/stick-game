@@ -1,4 +1,4 @@
-export const thirdMode = (state, sticks,taken) => {
+export const thirdMode = (state, sticks) => {
     const groups = [];
     let currentGroup = [];
 
@@ -31,7 +31,7 @@ export const thirdMode = (state, sticks,taken) => {
             for (let i = 0; i < take; i++) {
               const pos = group[start + i];
               sticks[pos] = 0;
-              taken.push(pos);
+              // taken.push(pos);
             }
             foundMove = true;
             break;
@@ -48,7 +48,7 @@ export const thirdMode = (state, sticks,taken) => {
       
       if (biggestGroup.length > 0) {
         sticks[biggestGroup[0]] = 0;
-        taken.push(biggestGroup[0]);
+        // taken.push(biggestGroup[0]);
       }
     }
 }

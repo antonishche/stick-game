@@ -16,21 +16,26 @@ export const isDisabled = (selected, state) => {
     case 1:
       return selected.length > state.max;
     case 2:
-      return (selected.length < state.min && selected.length !== state.restSticks) || 
-             selected.length > state.max;
+      return selected.length < state.min || selected.length > state.max;
     case 3:
       return selected.length > state.max || !areInRow(selected);
     case 4:
       return (selected.length < state.min || selected.length > state.max) || 
              !areInRow(selected);
     case 5:
-      return !([1, 2].includes(selected.length) || (selected.length === 3 && areInRow(selected)));
+      return !([1, 2].includes(selected.length) || (selected.length === 3 && !areInRow(selected)));
     default:
       return true;
   }
 }
 
 export const handleStickClick = (index, state, selected, setSelected, setErr) => {
+
+  if (state.winner) {
+    setErr('Игра закончилась.');
+    return
+  }
+
   if (state.sticks[index] === 0 || state.currentPlayer !== 'player') return;
 
   const newSelected = selected.includes(index)
@@ -38,7 +43,7 @@ export const handleStickClick = (index, state, selected, setSelected, setErr) =>
     : [...selected, index];
 
   if (newSelected.length > state.max) {
-    setErr('Уже выбрано максимальное количество палочек')
+    setErr('Уже выбрано максимальное количество палочек');
     return
   }
 
