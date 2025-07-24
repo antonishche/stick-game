@@ -8,5 +8,5 @@ export const secondMode = (state) => {
             }
         }
     }
-    return min
-  };
+    return min;
+};

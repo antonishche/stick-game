@@ -2,6 +2,7 @@ import { firstMode } from './mode1';
 import { secondMode } from './mode2';
 import { thirdMode } from './mode3';
 import { fourthMode } from './mode4';
+import { fifthMode } from './mode5';
 
 export const makeComputerMove = (state) => {
   const sticks = [...state.sticks];
@@ -21,6 +22,14 @@ export const makeComputerMove = (state) => {
       break;
     case 4:
       fourthMode(state, sticks);
+      break;
+    case 5:
+      const move = fifthMode(state);
+      if (move && move.length > 0) {
+        move.forEach(pos => {
+          sticks[pos - 1] = 0;
+        });
+      }
       break;
     default:
       break;
@@ -54,11 +63,11 @@ export const makeComputerMove = (state) => {
       });
       if (currentGroup.length) groups.push(currentGroup);
 
-      if (!groups.some(group => group.length >= state.min)) return 'computer'
+      if (!groups.some(group => group.length >= state.min)) return 'computer';
     }
     return null;
   }
-  
+
   whoWin = noMovesLeft(mode);
 
   return {

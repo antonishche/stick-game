@@ -1,13 +1,13 @@
 const areInRow = (sticks) => {
-    if (sticks.length < 2) return true;
-    const sorted = sticks.sort((a, b) => a - b);
-    for (let i = 1; i < sorted.length; i++) {
-      if (sorted[i] !== sorted[i - 1] + 1) {
-        return false;
-      }
+  if (sticks.length < 2) return true;
+  const sorted = sticks.sort((a, b) => a - b);
+  for (let i = 1; i < sorted.length; i++) {
+    if (sorted[i] !== sorted[i - 1] + 1) {
+      return false;
     }
-    return true;
   }
+  return true;
+}
 
 export const isDisabled = (selected, state) => {
   if (selected.length === 0) return true;
@@ -20,10 +20,10 @@ export const isDisabled = (selected, state) => {
     case 3:
       return selected.length > state.max || !areInRow(selected);
     case 4:
-      return (selected.length < state.min || selected.length > state.max) || 
-             !areInRow(selected);
+      return (selected.length < state.min || selected.length > state.max) ||
+        !areInRow(selected);
     case 5:
-      return !([1, 2].includes(selected.length) || (selected.length === 3 && !areInRow(selected)));
+      return ((selected.length === 3 && !areInRow(selected)));
     default:
       return true;
   }
@@ -42,12 +42,12 @@ export const handleStickClick = (index, state, selected, setSelected, setErr) =>
     ? selected.filter(i => i !== index)
     : [...selected, index];
 
-  if (newSelected.length > state.max) {
+  if (newSelected.length > state.max || (state.mode === 5 && newSelected.length > 3)) {
     setErr('Уже выбрано максимальное количество палочек');
     return
   }
 
-  if ([3, 4].includes(state.mode) && !areInRow(newSelected)) {
+  if (([3, 4].includes(state.mode) || (state.mode === 5 && newSelected.length === 3)) && !areInRow(newSelected)) {
     setErr('Палочки должны идти подряд.');
     return
   }

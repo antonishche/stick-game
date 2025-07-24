@@ -5,17 +5,15 @@ export const fourthMode = (state, sticks) => {
   let currentGroup = [];
 
   sticks.forEach((stick, index) => {
-        if (stick === 1) currentGroup.push(index);
-        else if (currentGroup.length) {
-          allGroups.push([...currentGroup]);
-            currentGroup = []
-        }
-    });
-    if (currentGroup.length) allGroups.push(currentGroup);
+    if (stick === 1) currentGroup.push(index);
+    else if (currentGroup.length) {
+      allGroups.push([...currentGroup]);
+      currentGroup = []
+    }
+  });
+  if (currentGroup.length) allGroups.push(currentGroup);
 
   const groups = allGroups.filter(group => group.length >= min);
-
-  const XOR = groups.reduce((sum, group) => sum ^ group.length, 0);
   let foundMove = false;
 
   for (let group of groups) {
@@ -47,11 +45,11 @@ export const fourthMode = (state, sticks) => {
   }
 
   if (!foundMove) {
-    const biggestGroup = groups.reduce((maxGroup, group) => 
+    const biggestGroup = groups.reduce((maxGroup, group) =>
       group.length > maxGroup.length ? group : maxGroup, []);
 
-      for (let i = 0; i < min; i++) {
-        sticks[biggestGroup[i]] = 0;
-      }
+    for (let i = 0; i < min; i++) {
+      sticks[biggestGroup[i]] = 0;
+    }
   }
 }
