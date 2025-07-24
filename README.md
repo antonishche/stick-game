@@ -10,7 +10,7 @@
     </ul>
   </p>
   
-  <p><strong>Хостинг</strong>: <a href="https://stick-trainer.web.app/">https://stick-trainer.web.app/</a>, удачи!</p>
+  <p><strong>Хостинг</strong>: <a href="https://stick-trainer.web.app/">https://stick-trainer.web.app/</a></p>
 </div>
 
 
