@@ -30,16 +30,18 @@ export const generateMoves = (sticks) => {
         moves.push(threeConsecutive);
     }
 
-    const stickIndices = sticks.reduce((indices, s, i) => {
-        if (s === 1) indices.push(i + 1);
-        return indices;
-    }, []);
-    for (let i = 0; i < stickIndices.length; i++) {
-        for (let j = i + 1; j < stickIndices.length; j++) {
-            moves.push([stickIndices[i], stickIndices[j]]);
+    if (moves.length < 15) {
+        const stickIndices = sticks.reduce((indices, s, i) => {
+            if (s === 1) indices.push(i + 1);
+            return indices;
+        }, []);
+        for (let i = 0; i < stickIndices.length; i++) {
+            for (let j = i + 1; j < stickIndices.length; j++) {
+                moves.push([stickIndices[i], stickIndices[j]]);
+                if (moves.length >= 15) break;
+            }
             if (moves.length >= 15) break;
         }
-        if (moves.length >= 15) break;
     }
 
     for (let i = 0; i < n; i++) {
@@ -76,9 +78,9 @@ export const ratePosition = (sticks) => {
 
     let score = 0;
     if (hasThreeInRow) score += 0.5; // Возможность взять 3 подряд — плюс
-    score -= groups * 0.25; // Много групп — минус
-    score += (remaining % 2 === 0 ? -0.25 : 0.25); // Чётность
-    score -= remaining * 0.1; // Меньше палочек — лучше
+    score -= groups * 0.15; // Много групп — минус
+    score += (remaining % 2 === 0 ? -0.3 : 0.3); // Чётность
+    score -= remaining * 0.05; // Меньше палочек — лучше
 
     return score;
 }
@@ -119,7 +121,7 @@ export const grundy = (sticks, depth = 0, maxDepth = Infinity) => {
 
     let mex = 0;
     while (subGrundy.has(mex)) {
-        mex++;
+        mex++; // теорема Шпрага-Гранди
     }
 
     memo[key] = mex;
