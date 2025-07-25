@@ -5,13 +5,15 @@ import Modal from '../Modal/Modal';
 const GameStatus = ({ state, mode, exitGame, rezero }) => {
   const [opened, setOpened] = useState(false);
 
-  useEffect(() => {
-    if (opened) {
+  function modalLogic() {
+    if (!opened) {
+      setOpened(!opened)
       document.body.style.overflow = 'hidden';
     } else {
+      setOpened(!opened)
       document.body.style.overflow = 'auto';
     }
-  }, [opened]);
+  }
 
   return (
     <>
@@ -21,12 +23,12 @@ const GameStatus = ({ state, mode, exitGame, rezero }) => {
             <h3>Подтверждение</h3>
             <p className={styles.message}>Вы действительно хотите выйти из игры?</p>
             <div className={styles.buttons}>
-              <button onClick={() => setOpened(false)} className={styles.cancel}>
+              <button onClick={() => modalLogic()} className={styles.cancel}>
                 Остаться
               </button>
               <button 
                 onClick={() => { 
-                  setOpened(false); 
+                  modalLogic() 
                   exitGame(null); 
                   rezero(false);
                 }} 
@@ -41,7 +43,7 @@ const GameStatus = ({ state, mode, exitGame, rezero }) => {
       
       <div className={styles.status}>
         <div className={styles.row}>
-          <div className={styles.btn} title='Выйти' onClick={() => setOpened(true)}>
+          <div className={styles.btn} title='Выйти' onClick={() => modalLogic()}>
             <img src="exit.png" alt="Выйти" className={styles.exitIcon} />
           </div>
           {state.winner ? (

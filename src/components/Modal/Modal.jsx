@@ -6,13 +6,15 @@ export default function Modal({ state, mode }) {
     const [opened, setOpened] = useState(false);
     const [wasClicked, setWasClicked] = useState(false);
 
-    useEffect(() => {
-        if (opened) {
-            document.body.style.overflow = 'hidden';
+    function modalLogic() {
+        if (!opened) {
+          setOpened(!opened)
+          document.body.style.overflow = 'hidden';
         } else {
-            document.body.style.overflow = 'auto';
+          setOpened(!opened)
+          document.body.style.overflow = 'auto';
         }
-    }, [opened]);
+      }
 
     return (
         <>
@@ -20,7 +22,7 @@ export default function Modal({ state, mode }) {
                 className={`${styles.btn} ${!wasClicked ? styles.pulse : ''}`} 
                 title='Правила' 
                 onClick={() => {
-                    setOpened(!opened);
+                    modalLogic();
                     setWasClicked(true);
                 }}
             >
@@ -40,7 +42,7 @@ export default function Modal({ state, mode }) {
                             <div className={styles.rules}>Проигрывает тот, кто не может сделать ход</div>
                         </div>
                         <div className={styles.buttons}>
-                            <button onClick={() => setOpened(false)} className={styles.ok}>
+                            <button onClick={() => modalLogic()} className={styles.ok}>
                                 Понятно
                             </button>
                         </div>
