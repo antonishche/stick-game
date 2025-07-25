@@ -9,12 +9,10 @@ import styles from './App.module.scss';
 
 const App = () => {
   const [gameState, setGameState] = useState(null);
-  const [k, setK] = useState();
-  const [mode, setMode] = useState(false);
+  const [mode, setMode] = useState(false)
 
   const handleStart = ({ objForLogic }) => {
     setGameState(initializeGame( objForLogic ));
-    setK(objForLogic.max);
   };
 
   useEffect(() => {
@@ -24,7 +22,7 @@ const App = () => {
       }, 1000);
       return () => clearTimeout(timeout);
     }
-  }, [gameState, k]);
+  }, [gameState]);
 
   if (!mode) {
     return <GameMode choseMode={setMode}/>
@@ -36,7 +34,7 @@ const App = () => {
         <GameSettings onStart={handleStart} choseMode={setMode} pickedMode={mode}/>
       ) : (
         <>
-          <GameStatus state={gameState} />
+          <GameStatus state={gameState} mode={mode} exitGame={setGameState} rezero={setMode}/>
           <GameBoard state={gameState} onPlayerMove={setGameState}/>
           {gameState.winner && (
             <button className={styles.newGameButton} onClick={() => setGameState(null)}>

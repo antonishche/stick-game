@@ -1,17 +1,156 @@
 .status {
-    text-align: center;
-    margin: 20px 0;
-  
-    h2, h3 {
-      margin: 0;
-      font-size: 1.5rem;
+  text-align: center;
+  margin: 20px 0;
+  padding: 0 2rem;
+
+  h2, h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+.win {
+  color: #21963c;
+  text-shadow: 0 2px 4px rgba(33, 150, 60, 0.2);
+}
+
+.lose {
+  color: #d32f2f;
+  text-shadow: 0 2px 4px rgba(211, 47, 47, 0.2);
+}
+
+.turnStatus {
+  color: #2c3e50;
+}
+
+.row {
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.exitIcon {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* Модальное окно */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal {
+  width: 90%;
+  max-width: 400px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  text-align: center;
+
+  h3 {
+    color: #2c3e50;
+    margin: 0 0 15px 0;
+    font-size: 1.5rem;
+    font-weight: 650;
+  }
+
+  .message {
+    color: #5a5a5a;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    font-size: 1rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+
+  button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    min-width: 120px;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 
-  .win {
-    color: #21963c;
+  .cancel {
+    background: #f8f8f8;
+    color: #5a5a5a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background: #e8e8e8;
+    }
   }
 
-  .lose{
-    color: rgb(186, 52, 52);
+  .confirm {
+    background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(255, 117, 140, 0.3);
+
+    &:hover {
+      background: linear-gradient(135deg, #ff647b 0%, #ff6fa8 100%);
+    }
   }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

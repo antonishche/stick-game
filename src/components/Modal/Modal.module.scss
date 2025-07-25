@@ -1,0 +1,158 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .modal {
+    width: 90%;
+    max-width: 500px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    padding: 30px;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  
+    h3 {
+      color: #2c3e50;
+      text-align: center;
+      margin: 0 0 25px 0;
+      font-size: 1.8rem;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      position: relative;
+  
+      &::after {
+        content: '';
+        display: block;
+        width: 48px;
+        height: 3px;
+        background: linear-gradient(90deg, #4dabf7 0%, #9775fa 100%);
+        margin: 0.8rem auto 0;
+        border-radius: 3px;
+      }
+    }
+  
+    .info {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  
+      .rules {
+        color: #444;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+  
+      hr {
+        border: none;
+        height: 1px;
+        background: linear-gradient(to right, transparent, #e0e0e0, transparent);
+        margin: 18px 0;
+      }
+  
+      div {
+        color: #5a5a5a;
+        margin: 12px 0;
+        font-size: 0.95rem;
+      }
+    }
+  
+    .buttons {
+      display: flex;
+      justify-content: center;
+  
+      button {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+      }
+  
+      .ok {
+        background: linear-gradient(135deg, #4dabf7 0%, #9775fa 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(77, 171, 247, 0.3);
+  
+        &:hover {
+          background: linear-gradient(135deg, #3a9cf4 0%, #8767f7 100%);
+        }
+      }
+  
+      .exit {
+        background: #f8f8f8;
+        color: #5a5a5a;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+        &:hover {
+          background: #e8e8e8;
+        }
+      }
+    }
+  }
+  
+  .btn {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: none;
+    border: none;
+    padding: 5px;
+    position: relative;
+  
+    img {
+      width: 32px;
+      height: 32px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+      transition: transform 0.3s ease;
+    }
+  
+    &:hover img {
+      transform: scale(1.1);
+    }
+  
+    &.pulse img {
+      animation-timing-function: linear;
+      animation: shake 3.5s infinite;
+    }
+  }
+  
+  @keyframes shake {
+    0%, 50%, 100% {
+      transform: rotate(35deg) translate(-5px, 5px);
+    }
+    25%, 75% {
+      transform: rotate(10deg) translate(0px, 0px);
+    }
+  }
+  
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

@@ -30,7 +30,7 @@ const GameSettings = ({ onStart, choseMode, pickedMode }) => {
       </div>
       <div className={styles.field}>
         <label>
-          Количество палочек:
+          Количество палочек: 5 — {maxN}
           <input
             type="number"
             name='number-of-sticks'
@@ -64,7 +64,7 @@ const GameSettings = ({ onStart, choseMode, pickedMode }) => {
             type="number"
             name='max-of-sticks'
             onChange={(e) => setMax(Number(e.target.value))}
-            min={min}
+            min={min || 1}
             max={n}
             className={styles.input}
             required

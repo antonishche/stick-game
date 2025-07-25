@@ -33,7 +33,6 @@ export const fourthMode = (state, sticks) => {
           for (let i = 0; i < take; i++) {
             const pos = group[start + i];
             sticks[pos] = 0;
-            // taken.push(pos);
           }
           foundMove = true;
           break;

@@ -16,6 +16,7 @@ export const fifthMode = (state) => {
   for (const move of moves) {
     const newSticks = applyMove(sticks, move);
     const g = grundy(newSticks, 0, maxDepth);
+    // console.log('Ход: ' + move, 'g: ' + g);
     const value = -g;
     if (value > bestValue) {
       bestValue = value;

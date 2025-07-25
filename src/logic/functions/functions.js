@@ -13,24 +13,25 @@ export const countGroups = (sticks) => {
 }
 
 export const findThreeInRow = (sticks) => {
+    const moves = [];
     for (let i = 0; i <= sticks.length - 3; i++) {
         if (sticks[i] === 1 && sticks[i + 1] === 1 && sticks[i + 2] === 1) {
-            return [i + 1, i + 2, i + 3];
+            moves.push([i + 1, i + 2, i + 3]);
         }
     }
-    return null;
-}
+    return moves;
+};
 
 export const generateMoves = (sticks) => {
     const moves = [];
-    const n = sticks.length;
+    const threeInRowMoves = findThreeInRow(sticks);
+    moves.push(...threeInRowMoves);
 
-    const threeConsecutive = findThreeInRow(sticks);
-    if (threeConsecutive) {
-        moves.push(threeConsecutive);
-    }
+    const rest = sticks.reduce((sum, s) => sum + s, 0);
+    const groups = countGroups(sticks);
+    let movesOnTwo = 0;
 
-    if (moves.length < 15) {
+    
         const stickIndices = sticks.reduce((indices, s, i) => {
             if (s === 1) indices.push(i + 1);
             return indices;
@@ -38,19 +39,20 @@ export const generateMoves = (sticks) => {
         for (let i = 0; i < stickIndices.length; i++) {
             for (let j = i + 1; j < stickIndices.length; j++) {
                 moves.push([stickIndices[i], stickIndices[j]]);
-                if (moves.length >= 15) break;
+                if (rest >= 15) {
+                    movesOnTwo++
+                }
+                if (movesOnTwo >= 20) break;
             }
-            if (moves.length >= 15) break;
+            if (movesOnTwo >= 20) break;
         }
-    }
 
-    for (let i = 0; i < n; i++) {
-        if (sticks[i] === 1) {
-            moves.push([i + 1]);
-        }
+    
+    for (let i = 0; i < sticks.length; i++) {
+        if (sticks[i] === 1) moves.push([i + 1]);
     }
     return moves;
-}
+};
 
 export const applyMove = (sticks, move) => {
     const newSticks = [...sticks];
@@ -78,8 +80,8 @@ export const ratePosition = (sticks) => {
 
     let score = 0;
     if (hasThreeInRow) score += 0.5; // Возможность взять 3 подряд — плюс
-    score -= groups * 0.15; // Много групп — минус
-    score += (remaining % 2 === 0 ? -0.3 : 0.3); // Чётность
+    score -= groups * 0.2; // Много групп — минус
+    score += (remaining % 2 === 0 ? -0.2 : 0.2); // Чётность
     score -= remaining * 0.05; // Меньше палочек — лучше
 
     return score;
